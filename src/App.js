@@ -81,8 +81,8 @@ class App extends Component {
       this.state.interval = setInterval(() => this.updateCounter(), 200);
     } else {
       clearInterval(this.state.interval);
-      this.state.interval = setInterval(() => this.updateCounter(), 1000);
-      this.state.spin = false;
+      // this.state.interval = setInterval(() => this.updateCounter(), 1000);
+      this.setState({spin: false});
     }
   }
 
