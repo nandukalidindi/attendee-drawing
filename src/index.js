@@ -7,6 +7,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
 ReactDOM.render(
-  <Roulette />,
+  <App />,
   document.getElementById('root')
 );

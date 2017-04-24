@@ -11,11 +11,6 @@ class Roulette extends Component {
     paper: null
   }
 
-  data = [
-    ["NANDU", "KALIDINDI", "NYU"],
-    ["MAHOTSAVY", "DAMA", "FMS"]
-  ]
-
   componentDidMount() {
     var paper = Raphael("holder");
     var offset = 5;
@@ -25,11 +20,14 @@ class Roulette extends Component {
     var center = {'x':200, 'y':200};
     var diameter = 180;
     var pieText= [
-      'Firefox',
-      'Thunderbird',
-      'Sea Monkey',
-      'Persona',
-      'Bugzilla',
+      'Alihan Ozbayrak',
+      'Sait Celebi',
+      'Joseph Watkins',
+      'Andrew Price',
+      'James Fierce',
+      'Mike Asem',
+      'Daryl Starr',
+      'Mikel Berger'
     ];
     var c = paper.circle(center.x, center.y, diameter);
     c.attr("fill", "black");
@@ -53,7 +51,7 @@ class Roulette extends Component {
       arc.attr("fill", this.getColor(i, this.multiplyList(pieText).length));
       arcs.push(arc);
     }
-    
+
     for(var i=0; i <this.multiplyList(pieText).length; i++){
       startAngle = endAngle;
       endAngle = startAngle + 360/this.multiplyList(pieText).length;
