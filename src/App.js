@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import UploadIcon from 'react-icons/lib/fa/cloud-upload';
 import Dropzone from 'react-dropzone';
+
+import User from './User.js';
 
 class App extends Component {
 
@@ -11,33 +12,9 @@ class App extends Component {
     fullData: [],
     users: [],
     spin: false,
-    interval: null
+    interval: null,
+    timeout: null
   }
-
-  // userData =  [["Desmond", "Strickland", "Fishery"],
-  //                  ['Thaddeus','Galvan','Professional Training & Coaching'],
-  //                  ['Lamont','Friedman','Automotive'],
-  //                  ['Martin','Holland','Information Technology and Services'],
-  //                  ['Nancy','Carr','Information Technology and Services'],
-  //                  ['Graham','Norris',' Ceramics & Concrete'],
-  //                  ['Royce','Lester','Veterinary'],
-  //                  ['Emily','Herman','Alternative Dispute Resolution'],
-  //                  ['Odessa','Clay','Warehousing'],
-  //                  ['Enid','Castaneda','Airlines/Aviation'],
-  //                  ['Mara','Schultz','Facilities Services'],
-  //                  ['Romeo','Navarro','Information Technology and Services'],
-  //                  ['Jess','Clay','Banking'],
-  //                  ['Aimee','Guerrero','Biotechnology'],
-  //                  ['Dino','Payne','Computer Games'],
-  //                  ['Susie','Velasquez','Nanotechnology'],
-  //                  ['Velma','Walton','Restaurants'],
-  //                  ['Rosario','Cook','Professional Training & Coaching'],
-  //                  ['Maximo','Morgan','Transportation/Trucking/Railroad'],
-  //                  ['Bettye','Sandoval','Tobacco'],
-  //                  ['Eve','Malone','Judiciary'],
-  //                  ['Daryl','Carney','Real Estate'],
-  //                  ['Britney','Pennington','Recreational Facilities and Services'],
-  //                  ['Phyllis','Chung','International Affairs']]
 
   figureUserData = []
 
@@ -48,7 +25,7 @@ class App extends Component {
       this.figureUserData = [];
       nextState.fullData.forEach(function(user, index) {
         this.figureUserData.push(
-          <figure key={index}> {this.userHtml(user[0], user[1], user[2])}</figure>
+          <figure key={index}> <User firstName={user[0]} lastName={user[1]} info={user[2]} /> </figure>
         );
       }.bind(this));
       this.setState({
@@ -59,7 +36,6 @@ class App extends Component {
   }
 
   updateCounter() {
-    var currentOffset = this.state.counter % this.state.fullData.length;
     var newUsers = this.figureUserData.slice(this.state.counter % this.state.fullData.length, (this.state.counter % this.state.fullData.length) + 6);
 
     if((this.state.counter % this.state.fullData.length) + 6 > this.state.fullData.length) {
@@ -91,12 +67,21 @@ class App extends Component {
     if(event.target.innerText === "SPIN") {
       this.state.spin = true;
       clearInterval(this.state.interval);
+      clearTimeout(this.state.timeout);
       this.state.interval = setInterval(() => this.updateCounter(), 50);
     } else {
       clearInterval(this.state.interval);
-      // this.state.interval = setInterval(() => this.updateCounter(), 1000);
+      clearTimeout(this.state.timeout);
+      this.state.timeout = setTimeout(function() {
+        this.state.interval = setInterval(() => this.updateCounter(), 1000);
+      }.bind(this), 2000);
       this.setState({spin: false});
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.state.timeout);
+    clearInterval(this.state.interval);
   }
 
   onDrop(files) {
@@ -109,7 +94,7 @@ class App extends Component {
             var splitter = line.split(",");
             userDetails.push([splitter[0], splitter[1], splitter[2]]);
           }
-        }.bind(this));
+        });
         this.setState({fullData: userDetails});
     }.bind(this);
 

@@ -29,11 +29,6 @@
     margin: auto;
 }
 
-.user-drawing-element-div {
-    text-align: center;
-    border: none;
-}
-
 .attendee-name {
     font-size: 80px;
     font-family: "Open Sans Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
