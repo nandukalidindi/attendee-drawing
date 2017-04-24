@@ -68,6 +68,35 @@ class Roulette extends Component {
     var p = paper.path(pcmd);
     p.attr("fill", "#F0F0F0");
     p.glow({width:5, offsetx:2.5, offsety:2.5});
+
+
+    var time = 8000; //ms
+    //var easing = '>'
+    var easing = 'cubic-bezier(0,1,0.1,1)' ;
+    var rotateAngle = 360 * 9;
+    //var rotateAngle = 360 * 1;
+    rotateAngle -= this.getAngleFromID(2, this.multiplyList(pieText).length);
+    rotateAngle += this.getRandomDriftDeg(this.multiplyList(pieText));
+    // spinToId texts
+    texts.forEach(function(text){
+      var fromAngle = parseInt(text.transform()[0][1]);
+      var toAngle = fromAngle + rotateAngle;
+      text.stop().animate({transform: "r" + toAngle + " " + center.x + " " + center.y}, time, easing);
+    });
+    // spinToId arcs
+    var roulette = paper.set(arcs);
+    roulette.stop().animate({transform: "r" + rotateAngle + " " + center.x + " " + center.y}, time, easing);
+
+  }
+
+  getAngleFromID(arcId, arcsCount){ // Do we need arcsCount?
+    var arcAngle = 360/arcsCount;
+    return (arcAngle * arcId + arcAngle/2);
+  }
+
+  getRandomDriftDeg(multipliedItems){
+    var arcAngle = 360/multipliedItems.length;
+    return Math.floor(0.9* (Math.random() * arcAngle - arcAngle/2)) ;
   }
 
   multiplyList(rawList){
@@ -90,10 +119,33 @@ class Roulette extends Component {
     //return colorArr[i];
   }
 
+  rotateRoulette(event) {
+    // var time = 8000; //ms
+    // //var easing = '>'
+    // var easing = 'cubic-bezier(0,1,0.1,1)' ;
+    // var rotateAngle = 360 * 9;
+    // //var rotateAngle = 360 * 1;
+    // rotateAngle -= getAngleFromID(id, multiplyList(pieText).length);
+    // rotateAngle += getRandomDriftDeg(multiplyList(pieText));
+    // // spinToId texts
+    // texts.forEach(function(text){
+    //   var fromAngle = parseInt(text.transform()[0][1]);
+    //   var toAngle = fromAngle + rotateAngle;
+    //   text.stop().animate({transform: "r" + toAngle + " " + center.x + " " + center.y}, time, easing);
+    // });
+    // // spinToId arcs
+    // var roulette = paper.set(arcs);
+    // roulette.stop().animate({transform: "r" + rotateAngle + " " + center.x + " " + center.y}, time, easing);
+  }
+
 
   render() {
     return (
-      <div id="holder" style={{width: "400px", height: "400px"}}>
+      <div>
+        <div id="holder" style={{width: "400px", height: "400px"}}>
+        </div>
+
+        <button onClick={this.rotateRoulette.bind(this)}>Rotate</button>
       </div>
     );
   }
