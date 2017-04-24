@@ -6,4 +6,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ![alt text](https://github.com/nandukalidindi/attendee-drawing/blob/master/spinner.png "Keep spinning!")
 
-### ROULETTE IMPLEMENTATION PENDING
+### ROULETTE IMPLEMENTATION WIP
+
+![alt text](https://github.com/nandukalidindi/attendee-drawing/blob/master/roulette.png "Keep spinning!")
