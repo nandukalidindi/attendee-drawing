@@ -5,11 +5,59 @@ import Dropzone from 'react-dropzone';
 
 import User from './User.js';
 
+const sampleData = [
+  [
+    "Monkey D ",
+    "Luffy",
+    "Captain @Straw Hat Pirates"
+  ],
+  [
+    "Roronoa",
+    "Zoro",
+    "Swordsman @Straw Hat Pirates"
+  ],
+  [
+    "Sanji ",
+    "Vinsmoke",
+    "Chef @Straw Hat Pirates"
+  ],
+  [
+    "Nami",
+    "",
+    "Navigator @Straw Hat Pirates"
+  ],
+  [
+    "Portgas D ",
+    "Ace",
+    "Commander @Whitebeard Pirates"
+  ],
+  [
+    "Aokiji",
+    "",
+    "Admiral @Navy"
+  ],
+  [
+    "Akainu",
+    "",
+    "Adminra @Navy"
+  ],
+  [
+    "Trafalgar",
+    "Law",
+    "Captain @Heart Pirates"
+  ],
+  [
+    "Doflamingo",
+    " Alias Broker",
+    "Former Shichibukai @Navy"
+  ]
+]
+
 class App extends Component {
 
   state = {
     counter: 0,
-    fullData: [],
+    fullData: sampleData,
     users: [],
     spin: false,
     interval: null,
@@ -18,21 +66,29 @@ class App extends Component {
 
   figureUserData = []
 
-  componentWillUpdate(nextProps, nextState) {
-    if(this.state.fullData.length !== nextState.fullData.length) {
+  // componentDidMount() {
+  //   this.interval = setInterval(this.updateCounter, 1000);
+  // }
+
+  componentWillMount() {
+    // if(this.state.fullData.length !== nextState.fullData.length) {
       if(this.state.interval)
-        clearInterval(this.state.interval);
+        clearInterval(this.interval);
+
       this.figureUserData = [];
-      nextState.fullData.forEach(function(user, index) {
+      this.state.fullData.forEach(function(user, index) {
         this.figureUserData.push(
           <figure key={index}> <User firstName={user[0]} lastName={user[1]} info={user[2]} /> </figure>
         );
       }.bind(this));
-      this.setState({
-        users: this.figureUserData.slice(0, 6),
-        interval: setInterval(() => this.updateCounter(), 1000)
-      })
-    }
+
+      this.state.users = this.figureUserData.slice(0, 6);
+      this.state.interval = setInterval(() => this.updateCounter(), 1000)
+      // this.setState({
+      //   users: this.figureUserData.slice(0, 6),
+      //   interval: setInterval(() => this.updateCounter(), 1000)
+      // })
+    // }
   }
 
   updateCounter() {
